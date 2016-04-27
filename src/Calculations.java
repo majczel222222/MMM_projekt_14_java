@@ -10,19 +10,19 @@
  */
 public class Calculations {
     
-    double A, a, T;
-    double Period, Amp;    
-    double stimulation(int stimulation_type, double Value, double Step_Size){
-        if(stimulation_type == 0 )                                              //square
+    double A_copy, a_copy, T_copy;
+    double Period_copy, Amp_copy;    
+    double Stimulation(int Stimulation_Type, double Value_copy, double Step_Size_copy){
+        if(Stimulation_Type == 0 )                                              //square
         {
-            if(Math.sin(2*Math.PI*Value/Period)>0) return Amp;
-            else return -Amp;
+            if(Math.sin(2*Math.PI*Value_copy/Period_copy)>0) return Amp_copy;
+            else return -Amp_copy;
         }
-        else if(stimulation_type == 1){                                         //triangle
-            return (Amp*Math.asin(Math.sin(2*Math.PI*(Value/Period))));
+        else if(Stimulation_Type == 1){                                         //triangle
+            return (Amp_copy*Math.asin(Math.sin(2*Math.PI*(Value_copy/Period_copy))));
         }
-        else if(stimulation_type == 2){                                         //sin
-            return(Amp*Math.sin(2*Math.PI*(Value/Period)));
+        else if(Stimulation_Type == 2){                                         //sin
+            return(Amp_copy*Math.sin(2*Math.PI*(Value_copy/Period_copy)));
         }
     return 0;
     }

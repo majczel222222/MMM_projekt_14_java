@@ -10,37 +10,32 @@ import org.jfree.data.xy.XYSeriesCollection;
 import javax.swing.JOptionPane;
 
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author majcz_000
  */
-public class Window extends javax.swing.JFrame {
+public class Window extends javax.swing.JFrame 
+{
     
     BackGround bgPanel = new BackGround(); //image of non-linear block
     
     XYSeries series_stim;                  //stimulation data series 
-    XYSeries series_answ;                  //answer data series 
+    XYSeries series_ans;                  //answer data series 
     XYSeries series_err;                   //error data series 
     
     
    boolean start_simulation = false;
    
-   int stimulation_type = 0;               //1-square, 2-triangle, 3-sin
+   int Stimulation_Type = 0;               //0-square, 1-triangle, 2-sin
 
     /**
      * Creates new form Window
      */
-    public Window() {
+    public Window() 
+    {
         initComponents();
         setResizable(false);
-       
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -55,9 +50,6 @@ public class Window extends javax.swing.JFrame {
         canvas1 = new java.awt.Canvas();
         canvas2 = new java.awt.Canvas();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         A = new javax.swing.JTextField();
@@ -67,26 +59,15 @@ public class Window extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         T = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        Amp = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         Period = new javax.swing.JTextField();
         Start_Simulation = new javax.swing.JButton();
-        step_size = new javax.swing.JTextField();
+        Step_Size = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        stimulation_type = new javax.swing.JComboBox<>();
+        Amp = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jRadioButton1.setText("Sinusoida");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton2.setText("Prostokąt");
-
-        jRadioButton3.setText("Trójkąt");
-        jRadioButton3.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -116,8 +97,6 @@ public class Window extends javax.swing.JFrame {
 
         jLabel6.setText("Amplituda");
 
-        Amp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         jLabel7.setText("Czas[s]");
 
         Period.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -126,9 +105,13 @@ public class Window extends javax.swing.JFrame {
         Start_Simulation.setForeground(new java.awt.Color(255, 0, 0));
         Start_Simulation.setText("Symuluj");
 
-        step_size.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Step_Size.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel8.setText("Krok");
+
+        stimulation_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prostokąt", "Trójkąt", "Sinusoida" }));
+
+        Amp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,7 +125,23 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Step_Size, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Period))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Amp)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(stimulation_type, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -153,51 +152,26 @@ public class Window extends javax.swing.JFrame {
                                     .addComponent(a, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                                     .addComponent(A)
                                     .addComponent(T)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton2))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(Start_Simulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(step_size))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Period))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Amp, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Amp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(stimulation_type, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(Amp))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Period, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(step_size, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(Step_Size, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,39 +207,32 @@ public class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void Start_SimulationActionPerformed(java.awt.event.ActionEvent evt)
+    {                                              
 
         start_simulation = true;
 
         Calculations Calculate = new Calculations();
-        
+        double Step_Size_copy = Double.parseDouble(Step_Size.getText());
 ///*
         try
            {
-           double Step_Size = Double.parseDouble(step_size.getText());
-           Calculate.Amp = Double.parseDouble(Amp.getText());
-           Calculate.Period = Double.parseDouble(Period.getText());
-           Calculate.A = Double.parseDouble(A.getText());
-           Calculate.a = Double.parseDouble(a.getText());
-           Calculate.T = Double.parseDouble(T.getText());
-                 
-           if(Calculate.A < 0 || Calculate.a < 0 || Calculate.T < 0)            // checks if the parameters are correct            
-            JOptionPane.showMessageDialog(null,"Parametry: A, a, T muszą być dodatnie!",null,JOptionPane.ERROR_MESSAGE); 
-            return;
            
-           if(Step_Size < 0)                        // checks if the parameters are correct            
-            JOptionPane.showMessageDialog(null,"Krok symulacji nie może być ujemny!",null,JOptionPane.ERROR_MESSAGE); 
-            return;
+           Calculate.Amp_copy = Double.parseDouble(Amp.getText());
+           Calculate.Period_copy = Double.parseDouble(Period.getText());
+           Calculate.A_copy = Double.parseDouble(A.getText());
+           Calculate.a_copy = Double.parseDouble(a.getText());
+           Calculate.T_copy = Double.parseDouble(T.getText());
+                 
+           if(Calculate.A_copy < 0 || Calculate.a_copy < 0 || Calculate.T_copy < 0)            // checks if the parameters are correct            
+            JOptionPane.showMessageDialog(null,"Parametry: A, a, T muszą być dodatnie!",null,JOptionPane.ERROR_MESSAGE); 
+            return;    
             
-           if(Step_Size < 0.001)                        // checks if the parameters are correct            
-            JOptionPane.showMessageDialog(null,"Za mały krok symulacji! Może spowodować zawieszenie komputera",null,JOptionPane.ERROR_MESSAGE); 
-            return;
-            
-           if(Calculate.Period > 400)                        // checks if the parameters are correct            
+           if(Calculate.Period_copy > 400)                        // checks if the parameters are correct            
             JOptionPane.showMessageDialog(null,"Za długi czas symulacji!",null,JOptionPane.ERROR_MESSAGE); 
             return;
             
-           if(Calculate.Amp < 0 ||  Calculate.Period< 0)                        // checks if the parameters are correct            
+           if(Calculate.Amp_copy < 0 ||  Calculate.Period_copy< 0)                        // checks if the parameters are correct            
             JOptionPane.showMessageDialog(null,"Amplituda i Czas muszą być dodatnie!",null,JOptionPane.ERROR_MESSAGE); 
             return;
            
@@ -276,10 +243,28 @@ public class Window extends javax.swing.JFrame {
             return;
         } 
         
+           if(Step_Size_copy < 0)                        // checks if the parameters are correct            
+            JOptionPane.showMessageDialog(null,"Krok symulacji nie może być ujemny!",null,JOptionPane.ERROR_MESSAGE); 
+            return;
+            
+           if(Step_Size_copy < 0.001)                        // checks if the parameters are correct            
+            JOptionPane.showMessageDialog(null,"Za mały krok symulacji! Może spowodować zawieszenie komputera",null,JOptionPane.ERROR_MESSAGE); 
+            return;
+            
+            Stimulation_Type = stimulation_type.getSelectedIndex();
+           
+            series_stim = new XYSeries("Pubudzenie");
+            series_ans = new XYSeries("Odpowiedź");
+            series_err = new XYSeries("Uchyb");
+            
+            XYSeriesCollection dataSet = new XYSeriesCollection();
+             
+            
+            
         
 //*/
         }
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }                                             
 
     /**
      * @param args the command line arguments
@@ -311,7 +296,9 @@ public class Window extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Window().setVisible(true);
+                Window inst = new Window();
+                inst.setLocationRelativeTo(null);
+                inst.setVisible(true);
             }
         });
     }
@@ -321,6 +308,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JTextField Amp;
     private javax.swing.JTextField Period;
     private javax.swing.JButton Start_Simulation;
+    private javax.swing.JTextField Step_Size;
     private javax.swing.JTextField T;
     private javax.swing.JTextField a;
     private java.awt.Canvas canvas1;
@@ -334,9 +322,6 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JTextField step_size;
+    private javax.swing.JComboBox<Int> stimulation_type;
     // End of variables declaration//GEN-END:variables
 }
